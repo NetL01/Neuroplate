@@ -1,6 +1,14 @@
 import gmaps
 from kivy.app import App
+from android.runnable import run_on_ui_thread
 
+
+@run_on_ui_thread
+def set_position(self, lat, lng):
+    pos = self.map_widget.create_latlng(lat, lng)
+    self.map_widget.map.moveCamera(
+        self.map_widget.camera_update_factory.newLatLngZoom(
+        pos, 13))
 
 class HelloGmaps(App):
     def build(self):
