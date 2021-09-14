@@ -1,6 +1,7 @@
 import gmaps
 from kivy.app import App
 
+
 class HelloGmaps(App):
     def build(self):
         self.map_widget = GMap()
@@ -16,5 +17,11 @@ class HelloGmaps(App):
             position=sydney)
         map_widget.map.addMarker(marker)
 
+def my_func(**kwargs):
+    pass
+
+
 if __name__ == '__main__':
     HelloGmaps().run()
+    map = GMap()
+    map.execute(my_func)
