@@ -1,0 +1,275 @@
+# Globaly set all labels to include MEIRYO font for Japanese character support
+<Label>:
+    font_name: '../MEIRYO.TTC'
+
+<TextInput>:
+    font_name: '../MEIRYO.TTC'
+
+# Create a custom black label 
+<CustLabel@Label>:
+    color: 0, 0, 0, 1
+
+# Create a popup
+<CustomPopup>:
+    size_hint: .5, .5
+    auto_dismiss: False
+    title: "The Popup"
+    Button:
+        text: "Close"
+        on_press: root.dismiss()
+
+
+<ScreenOne>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        FloatLayout:
+            Button:
+                text: "Go to Screen 2"
+                on_press: 
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_two"
+                pos_hint: {'right': 1, 'top': 1}
+                size_hint_x: .25
+                size_hint_y: .33
+                
+        TextInput:
+            id: name_input
+            hint_text: 'Enter Name'
+            text: ''
+            size_hint_x: .5
+            size_hint_y: .20
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            multiline: False
+            on_text_validate: root.update_name(name_input.text)
+
+        Label:
+            id: name_label
+            text: 'Name: '
+            color: 0, 0, 0, 1
+            size_hint_y: .20
+            pos_hint: {'top': .9}
+            
+        Label:
+            text: ""
+
+
+<ScreenTwo>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        FloatLayout:
+            Button:
+                text: "Back to Screen 1"
+                on_press: 
+                    root.manager.transition.direction = "right"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_one"
+                pos_hint: {'left': 1, 'top': 1}
+                size_hint_x: .25
+                size_hint_y: .4
+            Button:
+                text: "Go to Screen 3"
+                on_press: 
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_three"
+                pos_hint: {'right': 1, 'top': 1}
+                size_hint_x: .25
+                size_hint_y: .4
+        DateClock:
+            size_hint_x: 1
+            size_hint_y: 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        Label:
+            text: ""
+<ScreenThree>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        FloatLayout:
+            Button:
+                text: "Back to Screen 2"
+                on_press: 
+                    root.manager.transition.direction = "right"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_two"
+                pos_hint: {'left': 1, 'top': 1}
+                size_hint_x: .25
+                size_hint_y: .4
+        GridLayout:
+            rows: 1
+            cols: 4
+            Label:
+                text: ""
+            Label:
+                id: world_label
+                text: "Hello World"
+                color: (.11, .11, .11, 1)
+                font_size: 50
+            BoxLayout:
+                orientation: "vertical"
+                size_hint_x: .7
+                size_hint_y: .2
+                Label:
+                    text: ""
+                Spinner:
+                    text: "English"
+                    values: ["English", "French", "Japanese"]
+                    id: spinner_id
+                    on_text: root.spinner_clicked(spinner_id.text)
+                    
+                Label:
+                    text: ""
+            Label:
+                text: ""
+        Label:
+            text: ""
+
+# Properties for the DateClock label class            
+<DateClock>:
+    font_size: 70
+    color: (0, 0, 0, 1)
+
+<BigBoxLayout>:
+    orientation: 'vertical'
+    padding: 10
+    spacing: 10
+
+    BoxLayout:
+        orientation:'horizontal'
+        size_hint_x: .22
+
+        CustLabel:
+            text: "Enter"
+            size_hint_x: .80
+        CheckBox:
+            on_active: root.checkbox_enter_clicked(self, self.active)
+            size_hint_x: .55
+
+    BoxLayout:
+        orientation:'horizontal'
+        size_hint_x: .55
+
+        CustLabel:
+            text: "Favorite Color"
+            size_hint_x: .265
+        CheckBox:
+            group: 'fav_color'
+            value: root.blue
+            size_hint_x: 0.05
+        CustLabel:
+            text: 'Blue'
+            suze_hint_x: 0.15
+        CheckBox:
+            group: 'fav_color'
+            value: root.green
+            size_hint_x: 0.05
+        CustLabel:
+            text: 'Green'
+            suze_hint_x: 0.15
+        CheckBox:
+            group: 'fav_color'
+            value: root.red
+            size_hint_x: 0.05
+        CustLabel:
+            text: 'Red'
+            suze_hint_x: 0.15
+
+    BoxLayout:
+        orientation:'horizontal'
+        height: 30
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_x: .25
+
+            CustLabel:
+                text:  str(slider_id.value)
+
+            Slider:
+                id: slider_id
+                min: -100
+                max: 100
+                value: 0
+                step: 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_x: .25
+
+            CustLabel:
+                text: "On/ Off"
+
+            Switch:
+                id: switch_id
+                on_active: root.switch_on(self, self.active)
+    
+    BoxLayout:
+        orientation:'horizontal'
+        height: 30
+
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint_x: .25
+
+            Button: 
+                text: "Open Popup"
+                on_press: root.open_popup()
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_x: .25
+
+                Spinner:
+                    text: "First"
+                    values: ["First", "Second", "Third"]
+                    id: spinner_id
+                    on_text: root.spinner_clicked(spinner_id.text)
+
+    BoxLayout:
+        orientation: "horizontal"
+        height: 30
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_x: .25
+
+            TabbedPanel:
+                do_default_tab: False
+
+                TabbedPanelItem:
+                    text: "1st Tab"
+                    Label:
+                        text: "First Panel Content"
+                
+                TabbedPanelItem:
+                    text: "2nd Tab"
+                    Label:
+                        text: "Second Panel Content"
+                TabbedPanelItem:
+                    text: "3rd Tab"
+                    Label:
+                        text: "Third Panel Content"
+
